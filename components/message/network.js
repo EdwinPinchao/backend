@@ -6,7 +6,10 @@ const router = express.Router();
 // ayadir una peticion 
 // utilizar el archivo routes nos permite eliminar message de los endpoints
 router.get('/', function(req,res){
-  controller.getMessages()
+  
+ // consultas de query para sacar la peticion apra filtrar
+  const filterMessages= req.query.user || null;
+  controller.getMessages(filterMessages)
   .then((messageList)=>{
       response.success(req,res, messageList, 200)
   }).catch(e=>{
@@ -48,8 +51,30 @@ router.get('/', function(req,res){
 
 
  // creamos una ruta para modificar modificaciones parciales
+ //creado nuestro red, al controlador
+ router.patch('/:id',function (req, res) {
 
- router.patch('/Id',function (req, res) {
-   console.log(req.param.id);
+  // estamos recibiendo un  ID
+   //console.log(req.params.id);
+
+    controller.updateMessage(req.params.id, req.body.message)
+    .then((data)=>{
+      response.success(req, res,data,200);
+    })
+    .catch(e=>{
+      response.error(req, res, 'Error Interno', 500, e);
+    });
+
  })
+
+ router.delete('/:id', function (req,res){
+   controller.deleteMessage(req.params.id)
+   .then(()=>{
+     response.success(req,res, 'usuario Elminado',200);
+   })
+   .catch(e=>{
+     response.error(req,res, 'Error Interno', 500);
+   })
+ })
+
  module.exports= router; 
