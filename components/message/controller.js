@@ -1,6 +1,9 @@
 const store= require('./store');
 
 function addMessage(user, message){
+    console.log(user);
+    console.log(message);
+
     return new Promise((resolve, reject)=>{
         if(!user || !message){
             console.error(' [messageControlller] No hay usuario o mensaje');
@@ -19,12 +22,10 @@ function addMessage(user, message){
        store.add(fullMessage);
         resolve(fullMessage);
     });
-console.log(user);
-console.log(message);
 
 }
 
-function getMessage() {
+function getMessages() {
     // se utiliza las promesas para saber si algo a fallado en bd o componente
 
     return new Promise ((resolve, reject)=>{
@@ -33,5 +34,5 @@ function getMessage() {
 }
 module.exports={
     addMessage,
-    getMessage,
+    getMessages,
 };

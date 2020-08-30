@@ -1,12 +1,12 @@
 const express= require('express');
-const router = express.Router();
+
 const controller= require('./controller');
 const response= require('../../network/response')
-
+const router = express.Router();
 // ayadir una peticion 
 // utilizar el archivo routes nos permite eliminar message de los endpoints
 router.get('/', function(req,res){
-  controller.getMessage()
+  controller.getMessages()
   .then((messageList)=>{
       response.success(req,res, messageList, 200)
   }).catch(e=>{
@@ -46,4 +46,10 @@ router.get('/', function(req,res){
 
  //exportar el router es decir llevarnos esta dos rutas del servidor
 
+
+ // creamos una ruta para modificar modificaciones parciales
+
+ router.patch('/Id',function (req, res) {
+   console.log(req.param.id);
+ })
  module.exports= router; 
